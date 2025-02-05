@@ -1,0 +1,27 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %} Rack - GymShop{% endblock %}
+
+{% block hero_title %}Rack{% endblock %}
+
+{% block hero_image %}
+<!-- Nessuna immagine -->
+{% endblock %}
+
+{% block products %}
+<section class="products">
+    
+    {% for r in rack %} 
+    <div class="product">
+        <img src="{{ r.image.url }}" alt="Manubri">
+        <h3><a href="{% url 'gymapp:dettagli_prodotto' r.pid %}">{{ r.title }}</h3></a>
+        <p>{{ r.categoria.title }}</p>
+        <p>{{ r.description }}</p>
+        <p class="price">€{{ r.price }}</p>
+        <p><a href="{% url 'gymapp:fornitore_list' r.vendor.vid %}">{{ r.vendor }}</p></a>
+        <button><a href="{% url 'gymapp:add_to_cart' r.id %}">Aggiungi al carrello</button></a>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}

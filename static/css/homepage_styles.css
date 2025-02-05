@@ -1,0 +1,229 @@
+/* Stile generale del menu */
+.menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; /*centra gli elementi*/
+    background-color: rgb(202, 145, 255); /* Colore di sfondo del menu */
+}
+
+.menu > li {
+    position: relative;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #fff;
+    padding: 15px 20px;
+    display: block;
+    font-size: 16px;
+}
+
+.menu a:hover {
+    background-color: rgb(202, 145, 255); /* Colore di sfondo al passaggio del mouse */
+}
+
+/* Dropdown */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgb(202, 145, 255);
+    min-width: 200px;
+    z-index: 1;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown-content li a {
+    padding: 10px 15px;
+    display: block;
+    color: #fff;
+    font-size: 14px;
+}
+
+.dropdown-content li a:hover {
+    background-color: rgb(202, 145, 255);
+}
+.dropdown:hover .dropdown-content {
+display: block;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: #f4f4f4;
+    color: #333;
+}
+header {
+    background: #333;
+    color: #fff;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 70px; /* Regola la dimensione del logo */
+    height: auto; /* Mantiene le proporzioni */
+    margin-right: 10px; /* Spazio tra il logo e il titolo */
+}
+.copertina-container {
+    display: flex;
+    justify-content: center; /* Centra orizzontalmente */
+    height: 100vh; /* Altezza completa dello schermo */
+}
+
+.copertina {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Adatta l'immagine alle dimensioni */
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+nav ul li {
+    margin-left: 1rem;
+}
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+}
+.hero {
+    background: rgb(149, 119, 178) no-repeat center center/cover; /*Sfondo testo*/
+    height: 25vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000000; /*Colore testo*/
+    text-align: center;
+    text-shadow: 2px 2px 4px #fff, -2px -2px 4px #fff, 2px -2px 4px #fff, -2px 2px 4px #fff; /*Ombra testo*/
+}
+.hero h2 {
+    font-size: 2.5rem;
+    margin: 0;
+}
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Una griglia con colonne adattabili */
+    gap: 2rem; /* Spazio tra le colonne e le righe */
+    padding: 2rem;
+}
+.product {
+    text-align: center; /* Centra il contenuto all'interno di ciascun prodotto */
+    background: #fff;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.product img {
+    width: 100%; /* Occupa tutta la larghezza del contenitore */
+    height: auto; /* Mantiene le proporzioni */
+    max-width: 200px; /* Imposta una larghezza massima */
+    margin: 0 auto; /* Centra l'immagine */
+}
+.product h3 {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+}
+.product p {
+    font-size: 1rem;
+    color: #555;
+}
+.product button {
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.product button:hover {
+    background: #555;
+}
+.product .price {
+    font-size: 1.2rem; /* Dimensione del testo per il prezzo */
+    color: #1838aa; /* Colore del prezzo */
+    font-weight: bold; /* Grassetto per evidenziare */
+    margin: 0.5rem 0; /* Spazio sopra e sotto */
+}       
+footer {
+    text-align: center;
+    background: #333;
+    color: #fff;
+    padding: 1rem;
+    margin-top: 2rem;
+}
+.contact {
+    max-width: 800px; /* Larghezza massima per centrare il contenuto */
+    margin: 0 auto; /* Centro orizzontale */
+    padding: 2rem; /* Spaziatura interna */
+    background: #f4f4f4; /* Sfondo */
+    color: #333; /* Colore del testo */
+}
+
+.contact h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: center; /* Centrare i titoli */
+}
+
+.contact p, .contact ul {
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: justify; /* Allinea il testo per una lettura migliore */
+}
+
+.contact ul {
+    list-style-type: disc;
+    margin-left: 2rem; /* Indentazione degli elenchi */
+}
+
+.contact hr {
+    margin: 2rem 0;
+    border: none;
+    border-top: 1px solid #ccc;
+}
+
+/*messaggi a schermo*/
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+/* Messaggio di successo */
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+/* Messaggio di errore */
+.alert-error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+
+

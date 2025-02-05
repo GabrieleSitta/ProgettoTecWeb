@@ -1,0 +1,40 @@
+{% extends 'useradmin/dashboard.html' %}
+{% load static %}
+
+{% block content %}
+<div class="profile-container">
+    <div class="profile-header text-center">
+        <h1>Aggiorna Profilo Fornitore</h1>
+    </div>
+    {% if form.errors %}
+    <div class="alert-danger alert">
+        <strong>{{ form.errors }}</strong>                   
+    </div>
+    {% endif %}
+    <div class="profile-card card shadow-lg p-3">
+        <div class="profile-image text-center mb-3">
+            {% if fornitore.image %}
+                <img src="{{ fornitore.image.url }}" class="rounded-circle" style="width: 150px; height: 150px;" alt="Immagine profilo">
+            {% else %}
+                <img src="{% static 'media/def_user.jpg' %}" class="rounded-circle" style="width: 150px; height: 150px;" alt="User Avatar">
+            {% endif %}
+        </div>
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{form.title}}
+            </div>
+            <div class="mb-3">
+                {{form.address}}
+            </div>
+            <div class="mb-3">
+                {{form.description}}
+            </div>
+            <div class="mb-3">
+                {{form.image}}
+            </div>
+            <button class="btn btn-success" type="submit">Salva Cambiamenti</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

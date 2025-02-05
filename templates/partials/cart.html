@@ -1,0 +1,59 @@
+{% extends 'partials/base.html' %}
+{% block title %}Carrello 🛒{% endblock %}
+{% block hero_title %}Carrello 🛒{% endblock %}
+{% block hero_image %}
+<!-- Nessuna immagine -->
+{% endblock %}
+{% block products %}
+<!-- Nessuna Prodotto -->
+{% endblock %}
+{% block content %}
+{% if cart_items %}
+<table class="cart-table">
+    <thead>
+        <tr>
+            <th>Prodotto</th>
+            <th>Immagine</th>
+            <th>Quantità</th>
+            <th>Prezzo Unitario</th>
+            <th>Totale</th>
+            <th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart_items %}
+            <tr>
+                <td>{{ item.product.title }}</td>
+                <td>
+                    <a href="{% url 'gymapp:dettagli_prodotto' item.product.pid %}"><img src="{{ item.product.image.url }}" alt="{{ item.product.title }}" class="product-image" style="max-width: 100px;"></a>
+                </td>
+                <td>
+                    <form method="POST" action="{% url 'gymapp:update_cart_item' item.pk %}">
+                        {% csrf_token %}
+                        <input type="number" name="quantity" value="{{ item.qty }}" min="1" class="quantity-input">
+                        <button type="submit" class="update-btn">Aggiorna</button>
+                    </form>
+                </td>
+                <td>€{{ item.product.price }}</td>
+                <td>€{{ item.total }}</td>
+                <td>
+                    <a href="{% url 'gymapp:remove_from_cart' item.pk %}" class="remove-btn">Rimuovi</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<h3>Totale Carrello: €{{ total|floatformat:2 }}</h3>
+<!-- Bottone per il checkout -->
+<div class="checkout-button-container">
+    <a href="{% url 'gymapp:base' %}" class="btn return-btn">Continua lo shopping</a>
+    <a href="{% url 'gymapp:checkout' %}" class="btn checkout-btn">Vai al Checkout</a>
+</div>
+{% else %}
+<!-- Messaggio per carrello vuoto -->
+<h3>Il tuo carrello è vuoto</h3>
+<div class="return-to-shop">
+    <a href="{% url 'gymapp:base' %}" class="btn return-btn">Torna al negozio</a>
+</div>
+{% endif %}
+{% endblock %}

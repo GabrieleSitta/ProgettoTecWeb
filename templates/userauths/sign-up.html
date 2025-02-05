@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrati</title>
+    <style>
+        body {
+            background-color: #1c1c1c;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .register-container {
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+        }
+
+        .logo {
+            width: 80px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 14px;
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"], input[type="number"] {
+            background-color: #333;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        input::placeholder {
+            color: #999;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        button {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #444;
+        }
+
+        .login-link {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <a href ="{% url 'gymapp:base' %}">
+        <img src="/media/logo.jpg" alt="Logo GymShop" class="logo"></a>
+        <h1>Registrati su GymShop</h1>
+        <p>Crea un account per iniziare a gestire i tuoi ordini e preferiti.</p>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Registrati</button>
+            <div class="login-link">
+                <p>Hai già un account? <a href="{% url 'userauths:sign-in' %}">Accedi</a></p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

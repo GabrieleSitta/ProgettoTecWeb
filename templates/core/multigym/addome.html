@@ -1,0 +1,27 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %}Addominali - GymShop{% endblock %}
+
+{% block hero_title %}Addominali{% endblock %}
+
+{% block hero_image %}
+<!-- Nessuna immagine -->
+{% endblock %}
+
+{% block products %}
+<section class="products">
+    
+    {% for a in addome %} 
+    <div class="product">
+        <img src="{{ a.image.url }}" alt="Manubri">
+        <h3><a href="{% url 'gymapp:dettagli_prodotto' a.pid %}">{{ a.title }}</h3></a>
+        <p>{{ a.categoria.title }}</p>
+        <p>{{ a.description }}</p>
+        <p class="price">€{{ a.price }}</p>
+        <p><a href="{% url 'gymapp:fornitore_list' a.vendor.vid %}">{{ a.vendor }}</p></a>
+        <button><a href="{% url 'gymapp:add_to_cart' a.id %}">Aggiungi al carrello</button></a>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}

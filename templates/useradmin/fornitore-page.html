@@ -1,0 +1,29 @@
+{% extends 'useradmin/dashboard.html' %}
+{% load static %}
+
+{% block content %}
+<div class="profile-container">
+    <div class="profile-header text-center">
+        <h1>Profilo Fornitore</h1>
+    </div>
+    <div class="profile-card card shadow-lg p-3">
+        <div class="profile-image text-center mb-3">
+            {% if fornitore.image %}
+                <img src="{{ fornitore.image.url }}" class="rounded-circle" style="width: 150px; height: 150px;" alt="Immagine profilo">
+            {% else %}
+                <img src="{% static 'media/def_user.jpg' %}" class="rounded-circle" style="width: 150px; height: 150px;" alt="User Avatar">
+            {% endif %}
+        </div>
+        <div class="profile-details text-center">
+            <p><strong>Nome Azienda:</strong><input class="form-control mb-2" type="text" value="{{ fornitore.title }}" readonly></p>
+            <p><strong>Descrizione:</strong><input class="form-control mb-2" type="text" value="{{ fornitore.description }}" readonly></p>
+            <p><strong>Indirizzo Fisico:</strong><input class="form-control mb-2" type="text" value="{{ fornitore.address }}" readonly></p>
+        </div>
+        <div class="profile-actions text-center mt-3">
+            <a href="{% url 'userauths:sign-out' %}" class="btn btn-danger">Esci</a>
+            <a href="{% url 'gymapp:base' %}" class="btn btn-primary">Torna alla Home</a>
+            <a href="{% url 'useradmin:fornitore-update' %}" class="btn btn-success">Modifica profilo</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'partials/base.html' %}
+
+{% block title %}Pagamento Fallito{% endblock %}
+{% block hero_title %}Pagamento Fallito{% endblock %}
+{% block hero_image %}
+<!-- Nessuna immagine -->
+{% endblock %}
+{% block products %}
+<!-- Nessuna Prodotto -->
+{% endblock %}
+
+
+{% block content %}
+<body>
+    <div class="container">
+        <div class="error-icon">❌</div>
+        <h1>Pagamento Fallito</h1>
+        <p>Si è verificato un errore durante il pagamento. Riprova più tardi.</p>
+        <a href="/" class="btn btn-secondary">Torna alla Home</a>
+        <a href="/checkout" class="btn">Riprova il Pagamento</a>
+    </div>
+</body>
+</html>
+{% endblock %}

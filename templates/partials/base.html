@@ -1,0 +1,158 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <title>{% block title %}E-commerce Attrezzatura da Palestra{% endblock %}</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/homepage_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dettagli_prodotto_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fornitore_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cart_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/checkout_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/payment_failed.css' %}">
+    <link rel="stylesheet" href="{% static 'css/payment_completed.css' %}">
+    <link rel="stylesheet" href="{% static 'css/recc.css' %}">
+</head>
+<script>
+    // Chiude automaticamente i messaggi di allerta dopo 3 secondi
+    setTimeout(() => {
+        let alertElements = document.querySelectorAll('.alert');
+        alertElements.forEach(alert => {
+            alert.classList.remove('show');
+            alert.classList.add('fade');
+            setTimeout(() => alert.remove(), 500);
+        });
+    }, 3000);
+</script>
+<body>
+    <header>
+        <div class="logo-container">
+            <a href ="{% url 'gymapp:base' %}">
+            <img src="{% static 'media/logo.jpg' %}" alt="Logo GymShop" class="logo"></a>
+            <h1>GymShop</h1>
+        </div>
+        <form action="{% url 'gymapp:search' %}" method="get" style="margin: 0 auto; max-width: 400px; display: flex;">
+            <input type="text" name="q" placeholder="Cerca prodotti..." style="flex: 1; padding: 0.5rem; border: 1px solid #ccc; border-radius: 5px 0 0 5px;">
+            <button type="submit" style="padding: 0.5rem 1rem; background: #333; color: #fff; border: none; border-radius: 0 5px 5px 0; cursor: pointer;">
+                Cerca🔍
+            </button>
+        </form>
+        <nav>
+            <ul>
+                <li class="dropdown">
+                    <a href="" class="dropbtn">Utente👤</a>
+                    <ul class="dropdown-content">
+                        {% if request.user.is_authenticated %}
+                        <li><a href="{% url 'userauths:sign-out' %}">Logout</a></li>
+                        <li><a href="{% url 'userauths:user-view' %}">Profilo</a></li>
+                            {% if request.user.is_fornitore %}
+                            <li><a href="{% url 'useradmin:dashboard' %}">Dashboard</a></li>
+                            {% endif %}
+                        {% else %}
+                        <li><a href="{% url 'userauths:sign-up' %}">Registrati</a></li>
+                        <li><a href="{% url 'userauths:sign-in' %}">Accedi</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                <li><a href="{% url 'gymapp:cart' %}">Carrello🛒</a></li>
+                <li><a href="{% url 'gymapp:contatti' %}">Contattaci👥</a></li>
+            </ul>
+        </nav>
+    </header>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <!-- menù a tendina --> 
+    <section class="menu">
+        <nav>
+            <ul class="menu">
+                <li class="dropdown">
+                    <a href="" class="dropbtn">Pesistica🏋</a>
+                    <ul class="dropdown-content">
+                        <li><a href="{% url 'gymapp:manubri' %}">Manubri</a></li>
+                        <li><a href="{% url 'gymapp:panche' %}">Panche</a></li>
+                        <li><a href="{% url 'gymapp:bilancieri' %}">Bilancieri Olimpici</a></li>
+                        <li><a href="{% url 'gymapp:dischi' %}">Dischi Olimpici</a></li>
+                        <li><a href="{% url 'gymapp:collari' %}">Collari Olimpici</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href= "" class="dropbtn">Cardio🚴</a>
+                    <ul class="dropdown-content">
+                        <li><a href="{% url 'gymapp:tapis' %}">TapisRulant</a></li>
+                        <li><a href="{% url 'gymapp:vogatori' %}">Vogatori</a></li>
+                        <li><a href="{% url 'gymapp:cyclette' %}">Cyclette</a></li>
+                    </ul>
+                    <li class="dropdown">
+                        <a href= "" class="dropbtn">Multigym🦾</a>
+                        <ul class="dropdown-content">
+                            <li><a href="{% url 'gymapp:unica' %}">Unica</a></li>
+                            <li><a href="{% url 'gymapp:rack' %}">Rack</a></li>
+                            <li><a href="{% url 'gymapp:addome' %}">Addominiali</a></li>
+                            <li><a href="{% url 'gymapp:lombare' %}">Lombare</a></li>
+                        </ul>
+            </ul>
+        </nav>
+    </section>  
+    <section class="hero">
+        <h2>{% block hero_title %}Attrezzatura da palestra di alta qualità{% endblock %}</h2>
+    </section>
+
+    {% block hero_image %}
+    <section class="copertina-container">
+        <img src="/media/back.jpg" alt="copertina GymShop" class="copertina"></a>
+    </section>
+    {% endblock %}
+    
+    <section class="products">
+        {% block products %}
+        {% if user.is_authenticated %}
+            <section class="recommended">
+                <h2>Prodotti per te</h2>
+                {% if recommended_products %}
+                <div class="product-list">
+                    {% for product in recommended_products %}
+                    <div class="card">
+                        <img src="{{ product.image.url }}" alt="{{ product.title }}">
+                        <h3>{{ product.title }}</h3>
+                        <p>Prezzo: €{{ product.price }}</p>
+                        <a href="{% url 'gymapp:dettagli_prodotto' product.pid %}">Visualizza Dettagli</a>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                    <p>Non ci sono prodotti consigliati al momento.</p>
+                {% endif %}
+            </section>
+        {% else %}
+            <section class="login-prompt">
+                <p class="login-message">Devi effettuare il login per vedere le recensioni.</p>
+                <a href="{% url 'userauths:sign-in' %}" class="login-button">Effettua il Login</a>
+            </section>
+        {% endif %}
+        {% endblock %}
+    </section>
+
+    <section class="contact">
+        {% block content %}
+        <!-- Contenuto dei contatti inserito nei template figli -->
+        {% endblock %}
+    </section>
+
+    <footer>
+        <p>&copy; 2024 GymShop - Tutti i diritti riservati</p>
+        <p><a href="{% url 'gymapp:privacy' %}">informativa e privacy</a></p>
+    </footer>
+</body>
+</html>

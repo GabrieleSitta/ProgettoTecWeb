@@ -1,0 +1,27 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %}TapisRulant - GymShop{% endblock %}
+
+{% block hero_title %}TapisRulant{% endblock %}
+
+{% block hero_image %}
+<!-- Nessuna immagine -->
+{% endblock %}
+
+{% block products %}
+<section class="products">
+    
+    {% for t in tapisrulant %} 
+    <div class="product">
+        <img src="{{ t.image.url }}" alt="Manubri">
+        <h3><a href="{% url 'gymapp:dettagli_prodotto' t.pid %}">{{ t.title }}</h3></a>
+        <p>{{ t.categoria.title }}</p>
+        <p>{{ t.description }}</p>
+        <p class="price">€{{ t.price }}</p>
+        <p><a href="{% url 'gymapp:fornitore_list' t.vendor.vid %}">{{ t.vendor }}</p></a>
+        <button><a href="{% url 'gymapp:add_to_cart' t.id %}">Aggiungi al carrello</button></a>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}

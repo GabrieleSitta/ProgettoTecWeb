@@ -1,0 +1,90 @@
+{% extends 'partials/base.html' %}
+
+{% block title %}Fattura{% endblock %}
+{% block hero_title %}Fattura{% endblock %}
+{% block hero_image %}
+<!-- Nessuna immagine -->
+{% endblock %}
+{% block products %}
+<!-- Nessuna Prodotto -->
+{% endblock %}
+
+{% block content %}
+<div id="receipt">
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>Pagamento Completato</h1>
+                <p>ID Ordine: {{ order_code }}</p>
+                <p>Data: {{ date }}</p>
+
+            </div>
+
+            <table class="invoice-table">
+                <thead>
+                    <tr>
+                        <th>Prodotto</th>
+                        <th>Immagine</th>
+                        <th>Prezzo</th>
+                        <th>Quantità</th>
+                        <th>Totale</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop dei prodotti -->
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.product.title }}</td>
+                        <td><img src="{{ item.product.image.url }}" class="product-image"></td>
+                        <td>€{{ item.product.price|floatformat:2 }}</td>
+                        <td>{{ item.qty }}</td>
+                        <td>€{{ item.total|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="3" style="text-align:right;">Subtotale</th>
+                        <td>€{{ total|floatformat:2 }}</td>
+                    </tr>
+                    <tr>
+                        <th colspan="3" style="text-align:right;">Tasse Spedizione</th>
+                        <td>€{{ shipping_fee|floatformat:2 }}</td>
+                    </tr>
+                    <tr>
+                        <th colspan="3" style="text-align:right;">Totale</th>
+                        <td><strong>€{{ grand_total|floatformat:2 }}</strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="footer">
+                <p>Nota: Questa è una fattura generata automaticamente e non richiede una firma fisica.</p>
+                <p>Grazie per il tuo ordine!</p>
+            </div>
+        </div>
+    </div>
+        <a href="/" class="btn btn-secondary">Torna alla Home</a>
+        <button id="download-btn" class="btn btn-secondary">Scarica come JPG</button>
+
+         <!-- Javascript per il download dell'immagine, di tutto quello che è in receipt -->
+        <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+        <script>
+            document.getElementById("download-btn").addEventListener("click", function () {
+                const receipt = document.getElementById("receipt"); // Seleziona la sezione della ricevuta
+
+                html2canvas(receipt, { scale: 2 }).then(canvas => {
+                    // Converte il canvas in formato JPEG
+                    const imgData = canvas.toDataURL("image/jpeg", 1.0); // Ottieni l'immagine come stringa base64
+                    const link = document.createElement("a"); // Crea un link temporaneo
+                    link.href = imgData; // Assegna il contenuto dell'immagine al link
+                    link.download = "ricevuta_pagamento.jpg"; // Nome del file da scaricare
+                    link.click(); // Simula il clic per avviare il download
+                }).catch(error => {
+                    console.error("Errore durante la generazione dell'immagine:", error);
+                    alert("Si è verificato un errore durante il salvataggio della ricevuta. Riprova.");
+                });
+            });
+        </script>
+    </body>
+{% endblock %}

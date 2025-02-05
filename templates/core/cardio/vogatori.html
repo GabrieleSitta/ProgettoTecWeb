@@ -1,0 +1,27 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %} Vogatori - GymShop{% endblock %}
+
+{% block hero_title %}Vogatori{% endblock %}
+
+{% block hero_image %}
+<!-- Nessuna immagine -->
+{% endblock %}
+
+{% block products %}
+<section class="products">
+    
+    {% for v in vogatori %} 
+    <div class="product">
+        <img src="{{ v.image.url }}" alt="Manubri">
+        <h3><a href="{% url 'gymapp:dettagli_prodotto' v.pid %}">{{ v.title }}</h3></a>
+        <p>{{ v.categoria.title }}</p>
+        <p>{{ v.description }}</p>
+        <p class="price">€{{ v.price }}</p>
+        <p><a href="{% url 'gymapp:fornitore_list' v.vendor.vid %}">{{ v.vendor }}</p></a>
+        <button><a href="{% url 'gymapp:add_to_cart' v.id %}">Aggiungi al carrello</button></a>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}

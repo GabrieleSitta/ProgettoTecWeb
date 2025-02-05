@@ -1,0 +1,45 @@
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 70px; /* Regola la dimensione del logo */
+    height: auto; /* Mantiene le proporzioni */
+    margin-right: 10px; /* Spazio tra il logo e il titolo */
+}
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    background-color: #f8f9fa;
+    padding-top: 20px;
+}
+.sidebar a {
+    padding: 10px 20px;
+    text-decoration: none;
+    display: block;
+    color: #333;
+    font-weight: bold;
+}
+.sidebar a:hover {
+    background-color: #ddd;
+}
+.main-content {
+    margin-left: 260px;
+    padding: 20px;
+}
+.card {
+    border-radius: 8px;
+}
+.recent-orders table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.recent-orders table th, .recent-orders table td {
+    padding: 10px;
+    text-align: left;
+}
+.recent-orders table th {
+    background-color: #f0f0f0;
+}

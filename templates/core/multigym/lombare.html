@@ -1,0 +1,27 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %}Bassa Schiena - GymShop{% endblock %}
+
+{% block hero_title %}Bassa Schiena{% endblock %}
+
+{% block hero_image %}
+<!-- Nessuna immagine -->
+{% endblock %}
+
+{% block products %}
+<section class="products">
+    
+    {% for l in lombare %} 
+    <div class="product">
+        <img src="{{ l.image.url }}" alt="Manubri">
+        <h3><a href="{% url 'gymapp:dettagli_prodotto' l.pid %}">{{ l.title }}</h3></a>
+        <p>{{ l.categoria.title }}</p>
+        <p>{{ l.description }}</p>
+        <p class="price">€{{ l.price }}</p>
+        <p><a href="{% url 'gymapp:fornitore_list' l.vendor.vid %}">{{ l.vendor }}</p></a>
+        <button><a href="{% url 'gymapp:add_to_cart' l.id %}">Aggiungi al carrello</button></a>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}

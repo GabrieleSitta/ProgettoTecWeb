@@ -1,0 +1,123 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %}Dettagli_Prodotto{% endblock %}
+{% block hero_title %}Dettagli Prodotto{% endblock %}
+{% block hero_image %}
+<!-- Nessuna immagine -->
+{% endblock %}
+{% block products %}
+<!-- Nessuna Prodotto -->
+{% endblock %}
+
+{% block content %}
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <ul>
+                <li><a href="{% url 'gymapp:base' %}">Homepage</a></li>
+                <li><a href="{% url 'gymapp:contatti' %}">Contattaci</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="product-details">
+            <div class="product-images">
+                <h1 class="product-title">{{ p.title }}</h1>
+                <img src="{{ p.image.url }}" alt="{{ p.title }}" class="main-image">
+            </div>
+
+            <div class="product-info">
+                <p class="product-description">{{ p.description }}</p>
+                <p class="product-price"><strong>Prezzo:</strong> &euro; {{ p.price }}</p>
+
+                <div class="add-to-cart">
+                    <form method="POST" action="{% url 'gymapp:add_to_cart' p.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="add_to_cart" value="true">
+                        <button type="submit" class="button button-add-to-cart">Aggiungi al Carrello</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="product-meta">
+            <div class="meta-details">
+                <h4>Details:</h4>
+                <ul>
+                    <li><strong>Type:</strong> {{ p.categ_type }}</li>
+                    <li><strong>SKU:</strong> {{ p.sku }}</li>
+                    <li><strong>Stock:</strong> {{ p.stock_count }} items in stock</li>
+                </ul>
+            </div>
+
+            <div class="vendor-info">
+                <h4>Fornitore:</h4>
+                <p><a href="{% url 'gymapp:fornitore_list' p.vendor.vid %}">{{ p.vendor.title }}</p></a>
+                <p>Address: {{ p.vendor.address }}</p>
+                <p>Contact: {{ p.vendor.contact }}</p>
+            </div>
+        </section>
+        <section class="related-products">
+            <h3 class="related-title">Prodotti Correlati</h3>
+            <div class="related-grid">
+                {% if products %}
+                    {% for p in products %}
+                        <div class="related-card">
+                            <div class="badge">{{ p.badge }}</div>
+                            <img src="{{ p.image.url }}" alt="{{ p.title }}" class="related-image">
+                            <h4 class="related-name">{{ p.title }}</h4>
+                            <p><a href="{% url 'gymapp:fornitore_list' p.vendor.vid %}">{{ p.vendor.title }}</p></a>
+                            <p class="related-price">€{{ p.price }}</p>
+                            <a href="{% url 'gymapp:dettagli_prodotto' p.pid %}" class="related-details">Dettagli</a>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="no-products">Non ci sono altri prodotti correlati.</p>
+                {% endif %}
+            </div>
+        </section>
+        <section class="reviews">
+            {% if user.is_authenticated %}
+                <h3>Recensioni: ({{ reviews.count }})</h3>
+                {% for r in reviews %}
+                    <div class="review-box">
+                        <div class="review-header">
+                            <img src="{% static 'media/def_user.jpg' %}" alt="User Avatar" class="avatar"></a>
+                            <p><strong>{{ r.user|title }}</strong> ha dato: {{ r.get_rating_display }}/★★★★★</p>
+                        </div>
+                        <div class="review-body">
+                            <p>{{ r.review }}</p>
+                            <p><em>{{ r.date|date:"d M, Y" }}</em></p>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>Non ci sono ancora recensioni per questo prodotto. Scrivi la prima!</p>
+                {% endfor %}
+            </section>
+            <section class="add-review">
+                <h3>Aggiungi una recensione</h3>
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="add_review" value="true">
+                    <div class="form-group">
+                        <label for="review">Scrivi la tua recensione:</label>
+                        {{ review_form.review }}
+                    </div>
+                    <div class="form-group">
+                        <label for="rating">Valutazione:</label>
+                        {{ review_form.rating }}
+                    </div>
+                    <button type="submit" class="btn-submit">Invia Recensione</button>
+                </form>
+            {% else %}
+                <section class="login-prompt">
+                    <p class="login-message">Devi effettuare il login per vedere le recensioni.</p>
+                    <a href="{% url 'userauths:sign-in' %}" class="login-button">Effettua il Login</a>
+                </section>
+            {% endif %}
+        </section>
+    </main>
+</body>
+{% endblock %}

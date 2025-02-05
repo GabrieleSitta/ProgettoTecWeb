@@ -1,0 +1,27 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %}Unica - GymShop{% endblock %}
+
+{% block hero_title %}UnicaGym{% endblock %}
+
+{% block hero_image %}
+<!-- Nessuna immagine -->
+{% endblock %}
+
+{% block products %}
+<section class="products">
+    
+    {% for u in unica %} 
+    <div class="product">
+        <img src="{{ u.image.url }}" alt="Manubri">
+        <h3><a href="{% url 'gymapp:dettagli_prodotto' u.pid %}">{{ u.title }}</h3></a>
+        <p>{{ u.categoria.title }}</p>
+        <p>{{ u.description }}</p>
+        <p class="price">€{{ u.price }}</p>
+        <p><a href="{% url 'gymapp:fornitore_list' u.vendor.vid %}">{{ u.vendor }}</p></a>
+        <button><a href="{% url 'gymapp:add_to_cart' u.id %}">Aggiungi al carrello</button></a>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}

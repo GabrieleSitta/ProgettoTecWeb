@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/useradmin_css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/useradmin_css/man_users.css' %}">
+    <link rel="stylesheet" href="{% static 'css/useradmin_css/fornitorepage.css' %}">
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="logo-container">
+        <a href ="{% url 'gymapp:base' %}">
+        <img src="/media/logo.jpg" alt="Logo GymShop" class="logo"></a>
+        <h4>GymShop</h4>
+    </div>
+    <a href="{% url 'useradmin:dashboard' %}">Dashboard</a>
+    <a href="{% url 'useradmin:products' %}">Prodotti</a>
+    <a href="{% url 'useradmin:fornitore-view' %}">Profilo Fornitore</a>
+    <a href="{% url 'useradmin:add_product' %}">Aggiungi Prodotto</a>
+    {% if request.user.is_superuser %}
+        <a href="{% url 'useradmin:manage_users' %}">Utenti</a>
+    {% endif %}
+    <a href="{% url 'userauths:sign-out' %}">Logout</a>
+</div>
+{% block content %}
+<div class="main-content">
+    <h1>Dashboard</h1>
+    <p>Tutti i dati sulla tua attività qui</p>
+
+    <div class="row g-3">
+        <div class="col-md-3">
+            <div class="card text-center p-3">
+                <h5>Utenti iscritti al sito</h5>
+                <h3>{{new_costumers.count}}</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3">
+                <h5>Ordini</h5>
+                <h3>{{total_orders_count.count}}</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3">
+                <h5>Prodototti</h5>
+                <h3>{{all_products.count}}</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center p-3">
+                <h5>Tutte le categorie di prodotti</h5>
+                <h3>{{all_categories.count}}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="recent-orders mt-5">
+        <h3>Oridni recenti</h3>
+        <table class="table table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>ID Ordine</th>
+                    <th>Acquirente</th>
+                    <th>Data</th>
+                    <th>Total</th>
+                    <th>Stato Pagamento</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for l in latest_orders %}
+                    <tr>
+                        <td>#{{l.product.sku}}</td>
+                        <td>{{l.order.user}}</td>
+                        <td>{{l.order.order_date}}</td>
+                        <td>€{{l.total}}</td>
+                        <td>
+                            {% if l.paid_status == True %}
+                            <span class="badge bg-success">Paid</span>
+                            {% else %}
+                            <span class="badge bg-success">Not Paid</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

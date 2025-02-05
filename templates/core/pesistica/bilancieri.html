@@ -1,0 +1,27 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %} Bilancieri Olimpici - GymShop{% endblock %}
+
+{% block hero_title %}Bilancieri Olimpici{% endblock %}
+
+{% block hero_image %}
+<!-- Nessuna immagine -->
+{% endblock %}
+
+{% block products %}
+<section class="products">
+    
+    {% for b in barbell %} 
+    <div class="product">
+        <img src="{{ b.image.url }}" alt="Manubri">
+        <h3><a href="{% url 'gymapp:dettagli_prodotto' b.pid %}">{{ b.title }}</h3></a>
+        <p>{{ b.categoria.title }}</p>
+        <p>{{ b.description }}</p>
+        <p class="price">€{{ b.price }}</p>
+        <p><a href="{% url 'gymapp:fornitore_list' b.vendor.vid %}">{{ b.vendor }}</p></a>
+        <button><a href="{% url 'gymapp:add_to_cart' b.id %}">Aggiungi al carrello</button></a>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}

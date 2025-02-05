@@ -1,0 +1,91 @@
+{% extends 'useradmin/dashboard.html' %}
+{% load static %}
+{{ form.media }}
+{% block content %}
+<div class="main-content">
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Ruolo</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if users %}
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.is_fornitore|yesno:"Fornitore,Utente" }}</td>
+                    <td>
+                        <button class="btn btn-success toggle-role"
+                                data-user-id="{{ user.id }}"
+                                data-action="make_fornitore"
+                                {% if user.is_fornitore %}style="display:none;"{% endif %}>
+                            Rendi Fornitore
+                        </button>
+                        <button class="btn btn-danger toggle-role"
+                                data-user-id="{{ user.id }}"
+                                data-action="remove_fornitore"
+                                {% if not user.is_fornitore %}style="display:none;"{% endif %}>
+                            Rimuovi Fornitore
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4">Nessun utente trovato</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".toggle-role").forEach(button => {
+            button.addEventListener("click", function () {
+                const userId = this.getAttribute("data-user-id");
+                const action = this.getAttribute("data-action");
+
+                fetch("{% url 'useradmin:manage_users' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    body: new URLSearchParams({
+                        user_id: userId,
+                        action: action
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        const row = button.closest("tr");
+                        if (action === "make_fornitore") {
+                            row.querySelector("[data-action='make_fornitore']").style.display = "none";
+                            row.querySelector("[data-action='remove_fornitore']").style.display = "inline-block";
+                            row.querySelector("td:nth-child(3)").textContent = "Fornitore";
+                        } else if (action === "remove_fornitore") {
+                            row.querySelector("[data-action='remove_fornitore']").style.display = "none";
+                            row.querySelector("[data-action='make_fornitore']").style.display = "inline-block";
+                            row.querySelector("td:nth-child(3)").textContent = "Utente";
+                        }
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    alert("Errore durante l'aggiornamento del ruolo.");
+                    console.error(error);
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

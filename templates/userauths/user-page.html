@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilo Utente</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/userauths_css/user_styles.css' %}">
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <h1>Profilo Utente</h1>
+        </div>
+        <div class="profile-card">
+            <div class="profile-image">
+                {% if profile.image %}
+                <img src="{{ profile.image.url }}" style="width: 150px; height: 150px;" alt="Immagine profilo">
+                {% else %}
+                <img src="{% static 'media/def_user.jpg' %}" alt="User Avatar" class="avatar"></a>
+                {% endif %}
+            </div>
+            <div class="profile-details">
+                <p><strong>Nome utente -<input class="mb-2"type="text" value="{{ profile.full_name|title }}"></strong></p>
+                <p><strong>Bio - <input class="mb-2"type="text" value="{{ profile.bio }}"></strong></p>
+                <p><strong>Numero - <input class="mb-2"type="text" value="{{ profile.phone }}"></strong></p>
+                {% if profile.user.is_fornitore == True %}
+                    <p><strong>Fornitore</strong><i class="fas fa-check-cicle">✅</i></p>
+                {% else %}
+                    <p><strong>Non sei fornitore</strong><i class="fas fa-x">❌</i></p>
+                {%  endif %}
+            </div>
+            <div class="profile-dates">
+                <p><strong>Data di registrazione:{{ user.date_joined|date:"d/m/Y H:i" }}</strong></p>
+                <p><strong>Ultimo accesso:{{ user.last_login|date:"d/m/Y H:i" }}</strong></p>
+            </div>
+            <div class="profile-actions">
+                <a href="{% url 'userauths:sign-out' %}" class="btn logout">Esci</a>
+                <a href ="{% url 'gymapp:base' %}" class="btn home">Torna alla Home</a>
+                <a href ="{% url 'userauths:profile-update'%}" class="btn btn-success">Modifica profilo</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

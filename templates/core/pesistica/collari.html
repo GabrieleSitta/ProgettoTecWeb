@@ -1,0 +1,27 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %} Collari Olimpici - GymShop{% endblock %}
+
+{% block hero_title %}Collari per Bilancieri Olimpici{% endblock %}
+
+{% block hero_image %}
+<!-- Nessuna immagine -->
+{% endblock %}
+
+{% block products %}
+<section class="products">
+    
+    {% for c in ring %} 
+    <div class="product">
+        <img src="{{ c.image.url }}" alt="Manubri">
+        <h3><a href="{% url 'gymapp:dettagli_prodotto' c.pid %}">{{ c.title }}</h3></a>
+        <p>{{ c.categoria.title }}</p>
+        <p>{{ c.description }}</p>
+        <p class="price">€{{ c.price }}</p>
+        <p><a href="{% url 'gymapp:fornitore_list' c.vendor.vid %}">{{ c.vendor }}</p></a>
+        <button><a href="{% url 'gymapp:add_to_cart' c.id %}">Aggiungi al carrello</button></a>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}

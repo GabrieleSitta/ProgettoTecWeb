@@ -1,0 +1,27 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %} Manubri - GymShop{% endblock %}
+
+{% block hero_title %}Manubri{% endblock %}
+
+{% block hero_image %}
+<!-- Nessuna immagine -->
+{% endblock %}
+
+{% block products %}
+<section class="products">
+    
+    {% for m in manubri %} 
+    <div class="product">
+        <img src="{{ m.image.url }}" alt="Manubri">
+        <h3><a href="{% url 'gymapp:dettagli_prodotto' m.pid %}">{{ m.title }}</h3></a>
+        <p>{{ m.categoria.title }}</p>
+        <p>{{ m.description }}</p>
+        <p class="price">€{{ m.price }}</p>
+        <p><a href="{% url 'gymapp:fornitore_list' m.vendor.vid %}">{{ m.vendor }}</p></a>
+        <button><a href="{% url 'gymapp:add_to_cart' m.id %}">Aggiungi al carrello</button></a>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}

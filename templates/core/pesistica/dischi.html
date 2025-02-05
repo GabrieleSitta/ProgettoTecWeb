@@ -1,0 +1,27 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %} Dischi Olimpici - GymShop{% endblock %}
+
+{% block hero_title %}Dischi Olimipici{% endblock %}
+
+{% block hero_image %}
+<!-- Nessuna immagine -->
+{% endblock %}
+
+{% block products %}
+<section class="products">
+    
+    {% for d in pesi %} 
+    <div class="product">
+        <img src="{{ d.image.url }}" alt="Manubri">
+        <h3><a href="{% url 'gymapp:dettagli_prodotto' d.pid %}">{{ d.title }}</h3></a>
+        <p>{{ d.categoria.title }}</p>
+        <p>{{ d.description }}</p>
+        <p class="price">€{{ d.price }}</p>
+        <p><a href="{% url 'gymapp:fornitore_list' d.vendor.vid %}">{{ d.vendor }}</p></a>
+        <button><a href="{% url 'gymapp:add_to_cart' d.id %}">Aggiungi al carrello</button></a>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends 'partials/base.html' %} {% load static %}
+
+
+{% block title %}Dettagli_Fornitore{% endblock %}
+{% block hero_title %}Dettagli Fornitore{% endblock %}
+{% block hero_image %}
+<!-- Nessuna immagine -->
+{% endblock %}
+{% block products %}
+<!-- Nessuna Prodotto -->
+{% endblock %}
+
+{% block content %}
+<body>
+    <header class="head">
+        <nav class="navbar1">
+            <ul>
+                <li><a href="{% url 'gymapp:base' %}">Homepage</a></li>
+                <li><strong>Contattaci:</strong><a href="mailto:{{ vendor.user }}">{{ vendor.user }}</a></li>
+            </ul>
+        </nav>
+        <div class="head-content">
+            <h1>Prodotti di {{ vendor.title }}</h1>
+            <img src="{{ vendor.image.url }}" alt="{{ vendor.title }}" class="logo1">
+        </div>
+    </header>
+
+    <main>
+        <section class="supplier-info">
+            <h2>Informazioni sul Fornitore</h2>
+            <p><strong>Nome:</strong> {{ vendor.title }}</p>
+            <p><strong>Descrizione:</strong> {{ vendor.description }}</p>
+            <p><strong>Indirizzo:</strong> {{ vendor.address }}</p>
+            <p><strong>Telefono:</strong> {{ vendor.contact }}</p>
+            <p><strong>Fornitore Dal:</strong> {{ vendor.date|date:"Y" }}</p>
+        </section>
+
+        <section class="supplier-products">
+            <h2>Prodotti</h2>
+            <div class="product-list">
+                {% for p in prodotti %}
+                    <div class="product-item">
+                        <img src="{{ p.image.url }}" alt="{{ p.title }}" class="product-image">
+                        <h3>{{ p.title }}</h3>
+                        <p>{{ p.categoria.title }}</p>
+                        <p>{{ p.description|truncatechars:50 }}</p>
+                        <p><strong>Prezzo:</strong> &euro; {{ p.price }}</p>
+                        <a href="{% url 'gymapp:dettagli_prodotto' p.pid %}" class="details-button">Dettagli</a>
+                    </div>
+                {% empty %}
+                    <p>Questo fornitore non ha prodotti al momento.</p>
+                {% endfor %}
+            </div>
+            <section class="reviews">
+                {% if user.is_authenticated %}
+                <div class="reviews">
+                    <h2>Recensioni</h2>
+                    {% for review in reviews %}
+                    <div class="review-box">
+                        <div class="review-header">
+                            <img src="{% static 'media/def_user.jpg' %}" alt="User Avatar" class="avatar"></a>
+                            <p><strong>{{ review.user|title }}</strong> ha dato: {{ review.get_rating_display }}/★★★★★</p>
+                        </div>
+                        <div class="review-body">
+                            <p>{{ review.comment }}</p>
+                            <p><em>{{ review.date|date:"d M, Y" }}</em></p>
+                        </div>
+                    </div>
+                    {% empty %}
+                        <p>Nessuna recensione per questo fornitore.</p>
+                    {% endfor %}
+                </div>
+                
+                <div class="add-review">
+                    <h2>Lascia una Recensione</h2>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit">Invia</button>
+                    </form>
+                </div>
+                {% else %}
+                    <section class="login-prompt">
+                        <p class="login-message">Devi effettuare il login per vedere le recensioni.</p>
+                        <a href="{% url 'userauths:sign-in' %}" class="login-button">Effettua il Login</a>
+                    </section>
+                {% endif %}
+            </section>
+        </section>
+    </main>
+
+</body>
+{% endblock %}

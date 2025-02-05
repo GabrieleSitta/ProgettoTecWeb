@@ -1,0 +1,85 @@
+/* Sezione Risultati */
+.search-results {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.search-header h2 {
+    color: rgb(149, 119, 178);
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+/* Griglia dei Prodotti */
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.product-card {
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    max-width: 300px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.8);
+}
+
+.product-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.product-title {
+    font-size: 18px;
+    color: rgb(149, 119, 178);
+    margin: 10px 0;
+}
+
+.product-description {
+    font-size: 14px;
+    color: #ccc;
+    margin: 10px 0;
+}
+
+.product-price {
+    font-size: 16px;
+    color: rgb(149, 119, 178);
+    margin-bottom: 15px;
+}
+
+/* Bottone Dettagli */
+.details-button {
+    background-color: rgb(149, 119, 178);
+    color: #1c1c1c;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.details-button:hover {
+    background-color: #3717c6;
+}
+
+/* Nessun Risultato */
+.no-results {
+    text-align: center;
+    font-size: 18px;
+    color: #ccc;
+    margin-top: 20px;
+}

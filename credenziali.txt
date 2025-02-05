@@ -1,0 +1,53 @@
+
+------------Profilo Mail di Bonifico---------------
+Email : hostgymapp@gmail.com
+pass : Hostprova@123!!?
+
+---------------------------------------------------
+
+------------------Admin--------------------
+Email: gabbuz10@gmail.com
+pass: 12345
+-------------------------------------------
+
+
+------------------Venditori-----------------
+Email: specter@gmail.com
+pass: 123456789@a
+SpecterGym
+
+beatrix34@gmail.com
+123456789@a
+BeasGym
+
+LinusT@gmail.com
+123456789@a
+Gymapp
+
+lucrezia@gmail.com
+123456789@a
+LuGym
+
+enri@gmail.com
+123456789@a
+EnriMan
+
+------------------------------------------------
+
+------------Utenti---------------
+Email: marcone@sessanta.com
+pass: 123456789@a
+
+luca10@gmail.com
+123456789@a
+
+Thomas12@gmail.com
+123456789@a
+
+virgi@gmail.com
+123456789@a
+
+sittagabriele@gmail.com
+123456789@a
+
+-----------------------------------

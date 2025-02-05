@@ -1,0 +1,55 @@
+.recommended-products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.card {
+    width: 200px; /* Dimensione fissa della card */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden; /* Nasconde contenuti fuori dai bordi */
+    background-color: #222;
+    text-align: center;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: scale(1.05); /* Effetto hover */
+}
+
+.card img {
+    width: 100%; /* L'immagine occupa tutta la larghezza del contenitore */
+    height: 150px; /* Altezza fissa */
+    object-fit: cover; /* Adatta l'immagine senza distorsione */
+    border-radius: 10px 10px 0 0;
+}
+
+.card h3 {
+    font-size: 18px;
+    color: #fff;
+    margin: 10px 0;
+}
+
+.card p {
+    color: #ccc;
+}
+
+.card a {
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+.card a:hover {
+    background-color: #0056b3;
+}
